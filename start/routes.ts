@@ -25,5 +25,7 @@ import Route from '@ioc:Adonis/Core/Route'
     return { hello: 'world' }
   })
 
-  Route.post('/moments', 'MomentsController.store')
+  //resource cria varias rotas automatico
+  //apiOnly tras apenas as rotas que são necessarias
+  Route.resource('/moments', 'MomentsController').apiOnly()
  }).prefix('/api')

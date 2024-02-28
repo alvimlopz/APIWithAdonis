@@ -34,4 +34,13 @@ export default class MomentsController {
      data: moment,
     }
   }
+
+  //buscando todos os registro
+  public async index(){
+    const moments = await Moment.all()
+
+    return {
+      data: moments,
+    }
+  }
 }

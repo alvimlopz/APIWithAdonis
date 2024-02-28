@@ -3,6 +3,7 @@
  import Moment from 'App/Models/Moment'
 
 import Application from "@ioc:Adonis/Core/Application"
+import { Request } from '@adonisjs/core/build/standalone'
 
 export default class MomentsController {
   private validationOptions = {
@@ -10,6 +11,7 @@ export default class MomentsController {
     size: '2mb',
   }
 
+  //updaload da imagem
   public async store({ request, response }: HttpContextContract){
     const body = request.body()
 
@@ -63,5 +65,37 @@ export default class MomentsController {
       data: moment,
     }
 
+  }
+
+  //update
+  public async update({params, request}: HttpContextContract){
+
+    const body = request.body()
+
+    const moment = await Moment.findOrFail(params.id)
+
+    moment.title = body.title
+    moment.description = body.description
+
+    if(moment.image != body.image || !moment.image){
+      const image = request.file('image', this.validationOptions)
+
+      if (image){
+        const imageName = `${uuidv4()}.${image.extname}`
+
+        await image.move(Application.tmpPath('uploads'), {
+          name: imageName
+        })
+
+        moment.image = imageName
+      }
+      }
+
+      await moment.save()
+
+      return {
+        message: "Momento atualizado com suceso!",
+        data: moment,
+      }
   }
 }

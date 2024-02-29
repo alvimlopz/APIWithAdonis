@@ -29,5 +29,5 @@ import Route from '@ioc:Adonis/Core/Route'
   //apiOnly tras apenas as rotas que são necessarias
   Route.resource('/moments', 'MomentsController').apiOnly()
 
-  Route.post("/moments/:momentId/comments", "CommentsControler.store")
+  Route.post("/moments/:momentId/comments", "CommentsController.store")
  }).prefix('/api')

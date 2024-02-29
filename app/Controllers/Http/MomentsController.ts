@@ -50,6 +50,8 @@ export default class MomentsController {
   public async show({ params }: HttpContextContract){
     const moment = await Moment.findOrFail(params.id)
 
+    await moment.load('comments')
+
     return {
       data: moment,
     }

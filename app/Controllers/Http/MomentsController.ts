@@ -39,7 +39,7 @@ export default class MomentsController {
 
   //buscando todos os registro
   public async index(){
-    const moments = await Moment.all()
+    const moments = await Moment.query().preload('comments')
 
     return {
       data: moments,
